@@ -55,13 +55,15 @@ app.get('/api', (req, res) => {
   });
 });
 
-// TODO: Import and use routes
-// import authRoutes from './routes/auth.js';
-// import eventRoutes from './routes/events.js';
-// import swapRoutes from './routes/swaps.js';
-// app.use('/api/auth', authRoutes);
-// app.use('/api/events', eventRoutes);
-// app.use('/api', swapRoutes);
+// Import routes
+import authRoutes from './routes/auth.js';
+import eventRoutes from './routes/events.js';
+import swapRoutes from './routes/swaps.js';
+
+// Use routes
+app.use('/api/auth', authRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api', swapRoutes);
 
 // Socket.io connection handling
 io.on('connection', (socket) => {
