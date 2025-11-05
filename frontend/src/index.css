@@ -2,18 +2,364 @@
 @tailwind components;
 @tailwind utilities;
 
+/* React Datepicker Styles */
+@import 'react-datepicker/dist/react-datepicker.css';
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+/* React Datepicker Dark Theme Overrides */
+.react-datepicker {
+  background-color: #111111 !important;
+  border: 1px solid #374151 !important;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+.react-datepicker__header {
+  background-color: #1a1a1a !important;
+  border-bottom: 1px solid #374151 !important;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  color: #ffffff !important;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  color: #d1d5db !important;
+}
+
+.react-datepicker__day:hover {
+  background-color: #1a1a1a !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+.react-datepicker__day--disabled {
+  color: #6b7280 !important;
+}
+
+.react-datepicker__time-container {
+  border-left: 1px solid #374151 !important;
+}
+
+.react-datepicker__time {
+  background-color: #111111 !important;
+}
+
+.react-datepicker__time-list-item {
+  color: #d1d5db !important;
+}
+
+.react-datepicker__time-list-item:hover {
+  background-color: #1a1a1a !important;
+}
+
+.react-datepicker__time-list-item--selected {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: #d1d5db !important;
+}
+
+.react-datepicker__navigation:hover *::before {
+  border-color: #ffffff !important;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Focus styles */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* React Big Calendar Dark Theme - Redesigned */
+.calendar-dark {
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.calendar-dark .rbc-calendar {
+  color: #d1d5db;
+  background: transparent;
+}
+
+/* Toolbar Styling */
+.calendar-dark .rbc-toolbar {
+  padding: 16px;
+  margin-bottom: 16px;
+  background: rgba(26, 26, 26, 0.5);
+  border-radius: 12px;
+  border: 1px solid #374151;
+}
+
+.calendar-dark .rbc-toolbar button {
+  color: #d1d5db;
+  border: 1px solid #374151;
+  background: linear-gradient(135deg, #1a1a1a 0%, #111111 100%);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin: 0 4px;
+}
+
+.calendar-dark .rbc-toolbar button:hover,
+.calendar-dark .rbc-toolbar button:focus {
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  color: #ffffff;
+  border-color: #4b5563;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.calendar-dark .rbc-toolbar button.rbc-active {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+.calendar-dark .rbc-toolbar-label {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.125rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Header Styling */
+.calendar-dark .rbc-header {
+  color: #9ca3af;
+  border-color: #374151 !important;
+  padding: 16px 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  background: rgba(26, 26, 26, 0.5);
+}
+
+.calendar-dark .rbc-header + .rbc-header {
+  border-left-color: #374151 !important;
+}
+
+/* Month/Time View */
+.calendar-dark .rbc-month-view,
+.calendar-dark .rbc-time-view {
+  border-color: #374151 !important;
+  background-color: rgba(10, 10, 10, 0.5);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Day Cells */
+.calendar-dark .rbc-day-bg {
+  border-color: #374151 !important;
+  transition: background-color 0.2s ease;
+}
+
+.calendar-dark .rbc-day-bg:hover {
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.calendar-dark .rbc-off-range-bg {
+  background-color: rgba(10, 10, 10, 0.8);
+}
+
+.calendar-dark .rbc-today {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.1) 100%);
+  position: relative;
+}
+
+.calendar-dark .rbc-today::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+/* Date Cell Numbers */
+.calendar-dark .rbc-date-cell {
+  padding: 8px;
+}
+
+.calendar-dark .rbc-date-cell > a {
+  color: #d1d5db;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.calendar-dark .rbc-off-range .rbc-date-cell > a {
+  color: #6b7280;
+}
+
+.calendar-dark .rbc-now .rbc-date-cell > a {
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+.calendar-dark .rbc-date-cell:hover > a {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+/* Time Slots */
+.calendar-dark .rbc-time-slot {
+  border-color: #374151 !important;
+  min-height: 40px;
+}
+
+.calendar-dark .rbc-time-header-content {
+  border-color: #374151 !important;
+}
+
+.calendar-dark .rbc-time-content {
+  border-color: #374151 !important;
+}
+
+.calendar-dark .rbc-allday-cell {
+  color: #9ca3af;
+}
+
+/* Events */
+.calendar-dark .rbc-event {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.calendar-dark .rbc-event:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.calendar-dark .rbc-event.rbc-selected {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+.calendar-dark .rbc-event-label {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+/* Show more link */
+.calendar-dark .rbc-show-more {
+  color: #3b82f6;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.calendar-dark .rbc-show-more:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+}
+
+/* Row Segments */
+.calendar-dark .rbc-row-segment {
+  padding: 2px 4px;
+}
+
+/* Current time indicator */
+.calendar-dark .rbc-current-time-indicator {
+  background-color: #ef4444;
+  height: 2px;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+
+.calendar-dark .rbc-current-time-indicator::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: -5px;
+  width: 12px;
+  height: 12px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+}
+
+/* Agenda View */
+.calendar-dark .rbc-agenda-view {
+  background-color: rgba(10, 10, 10, 0.5);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.calendar-dark .rbc-agenda-view table {
+  border-color: #374151 !important;
+}
+
+.calendar-dark .rbc-agenda-date-cell,
+.calendar-dark .rbc-agenda-time-cell {
+  color: #9ca3af;
+  border-color: #374151 !important;
+}
+
+.calendar-dark .rbc-agenda-event-cell {
+  color: #d1d5db;
+  border-color: #374151 !important;
 }

@@ -1,47 +1,93 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useWebSocket } from './hooks/useWebSocket';
+import { useAuthStore } from './store/authStore';
+import ProtectedRoute from './components/common/ProtectedRoute';
+import Layout from './components/common/Layout';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import CalendarPage from './pages/CalendarPage';
+import Marketplace from './pages/Marketplace';
+import Requests from './pages/Requests';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isInitialized, setIsInitialized] = useState(false);
+  const { loadUser } = useAuthStore();
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full bg-white rounded-2xl shadow-2xl p-8">
+  useWebSocket();
+
+  // Load user from localStorage on app initialization for persistent auth
+  useEffect(() => {
+    const initAuth = async () => {
+      await loadUser();
+      setIsInitialized(true);
+    };
+    initAuth();
+  }, [loadUser]);
+
+  // Show loading state while checking authentication
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            SlotSwapper
-          </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            Peer-to-Peer Time Slot Exchange
-          </p>
-          
-          <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 mb-8">
-            <h2 className="text-2xl font-semibold text-blue-900 mb-4">
-              Initial Setup Complete!
-            </h2>
-            <p className=" mb-4">
-              Frontend is configured and ready. Now implementing the main features:
-            </p>
-           
-          </div>
-
-          <div className="flex items-center justify-center space-x-4">
-            <button
-              onClick={() => setCount((count) => count + 1)}
-              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md"
-            >
-              Count: {count}
-            </button>
-          </div>
-
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <p className="text-sm text-gray-500">
-              Built with React 18 + TypeScript + Vite + Tailwind CSS
-            </p>
-          </div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
         </div>
       </div>
-    </div>
-  )
+    );
+  }
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <CalendarPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/marketplace"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Marketplace />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/requests"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Requests />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
