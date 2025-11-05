@@ -1,0 +1,87 @@
+// Prisma schema for SlotSwapper application
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// User model
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  name      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  events              Event[]        @relation("UserEvents")
+  requestedSwaps      SwapRequest[]  @relation("SwapRequester")
+  receivedSwaps       SwapRequest[]  @relation("SwapRecipient")
+
+  @@map("users")
+}
+
+// Event status enum
+enum EventStatus {
+  BUSY
+  SWAPPABLE
+  SWAP_PENDING
+}
+
+// Event (calendar slot) model
+model Event {
+  id        Int         @id @default(autoincrement())
+  userId    Int         @map("user_id")
+  title     String      @db.VarChar(255)
+  startTime DateTime    @map("start_time")
+  endTime   DateTime    @map("end_time")
+  status    EventStatus @default(BUSY)
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  user              User          @relation("UserEvents", fields: [userId], references: [id], onDelete: Cascade)
+  requesterSwaps    SwapRequest[] @relation("RequesterSlot")
+  recipientSwaps    SwapRequest[] @relation("RecipientSlot")
+
+  // Indexes for performance
+  @@index([userId])
+  @@index([status])
+  @@index([startTime])
+  @@map("events")
+}
+
+// Swap status enum
+enum SwapStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+// SwapRequest model
+model SwapRequest {
+  id               Int        @id @default(autoincrement())
+  requesterId      Int        @map("requester_id")
+  recipientId      Int        @map("recipient_id")
+  requesterSlotId  Int        @map("requester_slot_id")
+  recipientSlotId  Int        @map("recipient_slot_id")
+  status           SwapStatus @default(PENDING)
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @updatedAt @map("updated_at")
+
+  // Relations
+  requester      User   @relation("SwapRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  recipient      User   @relation("SwapRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  requesterSlot  Event  @relation("RequesterSlot", fields: [requesterSlotId], references: [id], onDelete: Cascade)
+  recipientSlot  Event  @relation("RecipientSlot", fields: [recipientSlotId], references: [id], onDelete: Cascade)
+
+  // Indexes for performance
+  @@index([requesterId])
+  @@index([recipientId])
+  @@index([status])
+  @@map("swap_requests")
+}
