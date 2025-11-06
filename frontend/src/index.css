@@ -1,9 +1,9 @@
+/* React Datepicker Styles */
+@import 'react-datepicker/dist/react-datepicker.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* React Datepicker Styles */
-@import 'react-datepicker/dist/react-datepicker.css';
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -355,11 +355,15 @@ textarea:focus-visible {
 
 .calendar-dark .rbc-agenda-date-cell,
 .calendar-dark .rbc-agenda-time-cell {
-  color: #9ca3af;
+  color: #ffffff !important;
+  background-color: #1a1a1a !important; /* Solid dark background */
   border-color: #374151 !important;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Add shadow for better readability */
 }
 
 .calendar-dark .rbc-agenda-event-cell {
-  color: #d1d5db;
+  color: #000000 !important; /* Black text on colored backgrounds */
+  font-weight: 600;
   border-color: #374151 !important;
 }
