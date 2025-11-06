@@ -252,7 +252,8 @@ export const respondToSwapRequest = async (req: AuthRequest, res: Response): Pro
 
     const requestId = parseInt(req.params.requestId);
 
-    if (isNaN(requestId)) {
+    // Add validation
+    if (isNaN(requestId) || requestId <= 0) {
       res.status(400).json({ error: 'Invalid request ID' });
       return;
     }
