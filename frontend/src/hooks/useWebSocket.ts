@@ -19,12 +19,8 @@ export const useWebSocket = () => {
     socketService.connect(user.id);
 
     // Listen for real-time event updates
-    socketService.on('event:created', (data) => {
-      if (data.event && data.userId !== user.id) {
-        // Only show notification if it's not the current user's event
-        toast.info('A new event was created in the marketplace');
-      }
-      // Refresh events for all users to see the new event
+    socketService.on('event:created', () => {
+      // Silently refresh events - no toast for new events from others
       fetchEvents();
     });
 
@@ -37,16 +33,18 @@ export const useWebSocket = () => {
           // If event is now SWAPPABLE, add/update it in marketplace
           if (data.event.status === 'SWAPPABLE') {
             addOrUpdateSwappableSlot(data.event);
-            toast.info('New slot available in marketplace');
+            // Show toast ONLY when a slot becomes swappable (meaningful to users)
+            toast.info('🎯 New slot available in marketplace!', {
+              id: `swappable-${data.event.id}`,
+              description: `${data.event.title}`,
+              duration: 4000,
+            });
           } else {
             // If event is no longer SWAPPABLE, remove it from marketplace
             removeSwappableSlot(data.event.id);
           }
         }
-
-        if (data.userId !== user.id) {
-          toast.info('An event has been updated');
-        }
+        // Don't show generic "event updated" toasts - too noisy
       }
     });
 
@@ -56,17 +54,16 @@ export const useWebSocket = () => {
         removeSwappableSlot(data.eventId);
         // Refresh events to remove deleted event
         fetchEvents();
-        if (data.userId !== user.id) {
-          toast.info('An event has been removed');
-        }
+        // Silently handle deletions - not meaningful to other users
       }
     });
 
     // Listen for swap request received
     socketService.on('swap:request:received', (data) => {
-      toast.info(`${data.message}`, {
-        description: 'Check your requests page',
-        duration: 5000,
+      toast.info(`🔔 ${data.message}`, {
+        id: `swap-request-${data.swapRequest?.id}`,
+        description: 'Check your requests page to respond',
+        duration: 6000,
       });
       fetchSwapRequests();
       fetchEvents(); // Refresh to show SWAP_PENDING status
@@ -74,9 +71,10 @@ export const useWebSocket = () => {
 
     // Listen for swap request accepted
     socketService.on('swap:request:accepted', (data) => {
-      toast.success(`${data.message}`, {
-        description: 'The swap has been completed',
-        duration: 5000,
+      toast.success(`✅ ${data.message}`, {
+        id: `swap-accepted-${data.swapRequest?.id}`,
+        description: 'The swap has been completed successfully',
+        duration: 6000,
       });
       fetchSwapRequests();
       fetchEvents(); // Refresh to show new ownership
@@ -87,9 +85,10 @@ export const useWebSocket = () => {
 
     // Listen for swap request rejected
     socketService.on('swap:request:rejected', (data) => {
-      toast.error(`${data.message}`, {
+      toast.error(`❌ ${data.message}`, {
+        id: `swap-rejected-${data.swapRequest?.id}`,
         description: 'Your slots have been reset to swappable',
-        duration: 5000,
+        duration: 6000,
       });
       fetchSwapRequests();
       fetchEvents(); // Refresh to show SWAPPABLE status

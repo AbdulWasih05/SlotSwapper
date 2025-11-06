@@ -88,14 +88,18 @@ export default function CalendarPage() {
           startTime: formData.startTime.toISOString(),
           endTime: formData.endTime.toISOString(),
         });
-        toast.success('Event updated successfully');
+        toast.success('Event updated successfully', {
+          id: `update-${selectedEvent.id}`,
+        });
       } else {
         await createEvent({
           title: formData.title,
           startTime: formData.startTime.toISOString(),
           endTime: formData.endTime.toISOString(),
         });
-        toast.success('Event created successfully');
+        toast.success('Event created successfully', {
+          id: 'create-event',
+        });
       }
       setShowModal(false);
       setFormData({ title: '', startTime: null, endTime: null });
@@ -108,7 +112,9 @@ export default function CalendarPage() {
     if (!selectedEvent) return;
     try {
       await deleteEvent(selectedEvent.id);
-      toast.success('Event deleted successfully');
+      toast.success('Event deleted successfully', {
+        id: `delete-${selectedEvent.id}`,
+      });
       setShowModal(false);
     } catch (error) {
       toast.error('Failed to delete event');
@@ -120,7 +126,12 @@ export default function CalendarPage() {
     const newStatus = selectedEvent.status === 'BUSY' ? 'SWAPPABLE' : 'BUSY';
     try {
       await toggleEventStatus(selectedEvent.id, newStatus);
-      toast.success(`Event marked as ${newStatus}`);
+      const message = newStatus === 'SWAPPABLE' 
+        ? '✨ Event is now available for swapping!'
+        : 'Event marked as BUSY';
+      toast.success(message, {
+        id: `status-${selectedEvent.id}`,
+      });
       setSelectedEvent({ ...selectedEvent, status: newStatus });
     } catch (error) {
       toast.error('Failed to update status');
