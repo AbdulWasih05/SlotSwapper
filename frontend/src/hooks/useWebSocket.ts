@@ -5,6 +5,8 @@ import { useEventStore } from '../store/eventStore';
 import { useSwapStore } from '../store/swapStore';
 import { toast } from 'sonner';
 
+// Need to Fix memeory leak issue; Event listeners not cleaned up
+
 export const useWebSocket = () => {
   const { user, isAuthenticated } = useAuthStore();
   const { fetchEvents, updateEventInStore } = useEventStore();
