@@ -28,7 +28,7 @@ A full-stack peer-to-peer calendar app where users swap time slots with others. 
 
 ```bash
 git clone https://github.com/AbdulWasih05/SlotSwapper.git
-cd slotswapper
+cd servicehive
 docker-compose up
 
 # Wait for "listening on port 5000" and "Vite server running"
