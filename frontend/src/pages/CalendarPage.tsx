@@ -157,23 +157,25 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="p-8 min-h-screen bg-black">
+    <div className="p-4 sm:p-6 lg:p-8 min-h-screen bg-black">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-3xl font-bold text-white">My Calendar</h1>
-            <div className="flex items-center space-x-4 mt-2">
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-blue-500 rounded"></div>
-                <span className="text-sm text-gray-400">Busy</span>
+        {/* Header - Stacked on mobile, side-by-side on desktop */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-6">
+          <div className="flex-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">My Calendar</h1>
+            {/* Legend - Compact on mobile */}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-3">
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 bg-blue-500 rounded-sm"></div>
+                <span className="text-xs sm:text-sm text-gray-400">Busy</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-green-500 rounded"></div>
-                <span className="text-sm text-gray-400">Swappable</span>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 bg-green-500 rounded-sm"></div>
+                <span className="text-xs sm:text-sm text-gray-400">Swappable</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-orange-500 rounded"></div>
-                <span className="text-sm text-gray-400">Swap Pending</span>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 bg-orange-500 rounded-sm"></div>
+                <span className="text-xs sm:text-sm text-gray-400">Pending</span>
               </div>
             </div>
           </div>
@@ -183,14 +185,17 @@ export default function CalendarPage() {
               setFormData({ title: '', startTime: null, endTime: null });
               setShowModal(true);
             }}
-            className="flex items-center space-x-2 bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-blue-500/20"
+            className="flex items-center justify-center gap-2 bg-blue-600 text-white 
+                       px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-sm sm:text-base font-medium
+                       hover:bg-blue-700 transition-all hover:scale-[1.02] active:scale-[0.98] 
+                       shadow-lg shadow-blue-500/20 w-full sm:w-auto"
           >
-            <Plus className="w-5 h-5" />
+            <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>New Event</span>
           </button>
         </div>
 
-        <div className="bg-[#111111] rounded-xl shadow-lg border border-gray-800 p-6 calendar-dark" style={{ height: '600px' }}>
+        <div className="bg-[#111111] rounded-xl shadow-lg border border-gray-800 p-3 sm:p-4 lg:p-6 calendar-dark" style={{ height: 'calc(100vh - 220px)', minHeight: '500px' }}>
           <Calendar
             localizer={localizer}
             events={calendarEvents}

@@ -208,9 +208,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
 
             {/* User info in drawer */}
-            <div className="px-4 py-4 border-b border-gray-800">
+            <div className={`px-4 py-4 border-b border-gray-800 transition-all duration-300 ${
+              isAnimating ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+            }`} style={{ transitionDelay: '100ms' }}>
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-semibold shadow-lg shadow-blue-500/30">
                   {user?.name?.charAt(0).toUpperCase() || 'U'}
                 </div>
                 <div>
@@ -221,13 +223,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
 
             {/* Swipe indicator */}
-            <div className="flex justify-center py-2">
-              <div className="w-10 h-1 bg-gray-700 rounded-full" />
+            <div className="flex justify-center py-3">
+              <div className="w-12 h-1 bg-gray-700 rounded-full opacity-50" />
             </div>
 
-            {/* Navigation links */}
+            {/* Navigation links with staggered animation */}
             <nav className="px-3 py-2 space-y-1">
-              {navItems.map((item) => {
+              {navItems.map((item, index) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
                 return (
@@ -235,27 +237,40 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     key={item.path}
                     to={item.path}
                     onClick={closeMenu}
-                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
-                      isActive
-                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
-                        : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                    }`}
+                    className={`flex items-center space-x-3 px-4 py-3.5 rounded-xl text-base font-medium 
+                               transition-all duration-300 active:scale-[0.98]
+                               ${isAnimating ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}
+                               ${isActive
+                                 ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/30'
+                                 : 'text-gray-300 hover:bg-gray-800/80 hover:text-white active:bg-gray-700'
+                               }`}
+                    style={{ transitionDelay: `${150 + index * 50}ms` }}
                   >
-                    <Icon className="w-5 h-5" />
+                    <div className={`p-2 rounded-lg ${isActive ? 'bg-blue-500/30' : 'bg-gray-800'}`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
                     <span>{item.label}</span>
+                    {isActive && (
+                      <div className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse" />
+                    )}
                   </Link>
                 );
               })}
             </nav>
 
-            {/* Logout button at bottom */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800">
+            {/* Logout button at bottom with animation */}
+            <div className={`absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800 bg-[#111111] transition-all duration-300 ${
+              isAnimating ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`} style={{ transitionDelay: '350ms' }}>
               <button
                 onClick={() => {
                   closeMenu();
                   handleLogout();
                 }}
-                className="flex items-center justify-center space-x-2 w-full px-4 py-3 rounded-lg text-base font-medium text-gray-300 hover:bg-red-600 hover:text-white transition-all duration-200"
+                className="flex items-center justify-center space-x-2 w-full px-4 py-3.5 rounded-xl text-base font-medium 
+                           text-red-400 bg-red-500/10 border border-red-500/20
+                           hover:bg-red-600 hover:text-white hover:border-red-600
+                           active:scale-[0.98] transition-all duration-200"
               >
                 <LogOut className="w-5 h-5" />
                 <span>Logout</span>
