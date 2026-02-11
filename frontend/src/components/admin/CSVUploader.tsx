@@ -102,12 +102,12 @@ export default function CSVUploader({ onSuccess }: CSVUploaderProps) {
   };
 
   return (
-    <div className="bg-[#111111] rounded-xl border border-gray-800 p-6">
+    <div className="bg-white rounded-xl border border-slate-200 shadow-card p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-white">Import Appointments</h3>
+        <h3 className="text-lg font-semibold text-slate-900">Import Appointments</h3>
         <button
           onClick={handleDownloadTemplate}
-          className="flex items-center space-x-2 text-sm text-blue-400 hover:text-blue-300"
+          className="flex items-center space-x-2 text-sm text-teal-600 hover:text-teal-700"
         >
           <Download className="w-4 h-4" />
           <span>Download Template</span>
@@ -117,11 +117,11 @@ export default function CSVUploader({ onSuccess }: CSVUploaderProps) {
       {!file ? (
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-gray-700 rounded-lg p-8 text-center cursor-pointer hover:border-gray-600 transition-colors"
+          className="border-2 border-dashed border-slate-300 hover:border-teal-400 rounded-lg p-8 text-center cursor-pointer bg-slate-50 transition-colors"
         >
-          <Upload className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-          <p className="text-gray-400 mb-2">Click to upload or drag and drop</p>
-          <p className="text-sm text-gray-600">CSV file only</p>
+          <Upload className="w-12 h-12 text-slate-400 mx-auto mb-4" />
+          <p className="text-slate-600 mb-2">Click to upload or drag and drop</p>
+          <p className="text-sm text-slate-400">CSV file only</p>
           <input
             ref={fileInputRef}
             type="file"
@@ -133,17 +133,17 @@ export default function CSVUploader({ onSuccess }: CSVUploaderProps) {
       ) : (
         <div className="space-y-4">
           {/* File info */}
-          <div className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
+          <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
             <div className="flex items-center space-x-3">
-              <FileText className="w-8 h-8 text-blue-400" />
+              <FileText className="w-8 h-8 text-teal-600" />
               <div>
-                <p className="text-white font-medium">{file.name}</p>
-                <p className="text-sm text-gray-500">{parsedData.length} rows found</p>
+                <p className="text-slate-900 font-medium">{file.name}</p>
+                <p className="text-sm text-slate-500">{parsedData.length} rows found</p>
               </div>
             </div>
             <button
               onClick={handleClear}
-              className="p-2 text-gray-400 hover:text-white"
+              className="p-2 text-slate-400 hover:text-slate-600"
             >
               <X className="w-5 h-5" />
             </button>
@@ -154,26 +154,26 @@ export default function CSVUploader({ onSuccess }: CSVUploaderProps) {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-800">
-                    <th className="px-3 py-2 text-left text-gray-400">Patient Email</th>
-                    <th className="px-3 py-2 text-left text-gray-400">Title</th>
-                    <th className="px-3 py-2 text-left text-gray-400">Start</th>
-                    <th className="px-3 py-2 text-left text-gray-400">End</th>
+                  <tr className="border-b border-slate-200">
+                    <th className="px-3 py-2 text-left text-slate-500">Patient Email</th>
+                    <th className="px-3 py-2 text-left text-slate-500">Title</th>
+                    <th className="px-3 py-2 text-left text-slate-500">Start</th>
+                    <th className="px-3 py-2 text-left text-slate-500">End</th>
                   </tr>
                 </thead>
                 <tbody>
                   {parsedData.slice(0, 5).map((row, index) => (
-                    <tr key={index} className="border-b border-gray-800/50">
-                      <td className="px-3 py-2 text-gray-300">{row.patientEmail}</td>
-                      <td className="px-3 py-2 text-gray-300">{row.title}</td>
-                      <td className="px-3 py-2 text-gray-400 text-xs">{row.startTime}</td>
-                      <td className="px-3 py-2 text-gray-400 text-xs">{row.endTime}</td>
+                    <tr key={index} className="border-b border-slate-100">
+                      <td className="px-3 py-2 text-slate-700">{row.patientEmail}</td>
+                      <td className="px-3 py-2 text-slate-700">{row.title}</td>
+                      <td className="px-3 py-2 text-slate-500 text-xs">{row.startTime}</td>
+                      <td className="px-3 py-2 text-slate-500 text-xs">{row.endTime}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
               {parsedData.length > 5 && (
-                <p className="text-sm text-gray-500 mt-2 px-3">
+                <p className="text-sm text-slate-400 mt-2 px-3">
                   ... and {parsedData.length - 5} more rows
                 </p>
               )}
@@ -184,21 +184,21 @@ export default function CSVUploader({ onSuccess }: CSVUploaderProps) {
           {result && (
             <div className="space-y-3">
               <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2 text-green-400">
+                <div className="flex items-center space-x-2 text-emerald-600">
                   <Check className="w-5 h-5" />
                   <span>{result.success} imported</span>
                 </div>
                 {result.failed > 0 && (
-                  <div className="flex items-center space-x-2 text-red-400">
+                  <div className="flex items-center space-x-2 text-red-600">
                     <AlertCircle className="w-5 h-5" />
                     <span>{result.failed} failed</span>
                   </div>
                 )}
               </div>
               {result.errors.length > 0 && (
-                <div className="bg-red-900/20 border border-red-800 rounded-lg p-3">
-                  <p className="text-sm text-red-400 font-medium mb-2">Errors:</p>
-                  <ul className="text-sm text-red-300 space-y-1">
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                  <p className="text-sm text-red-600 font-medium mb-2">Errors:</p>
+                  <ul className="text-sm text-red-500 space-y-1">
                     {result.errors.slice(0, 5).map((err, index) => (
                       <li key={index}>{err}</li>
                     ))}
@@ -212,7 +212,7 @@ export default function CSVUploader({ onSuccess }: CSVUploaderProps) {
           )}
 
           {error && (
-            <div className="bg-red-900/20 border border-red-800 text-red-400 px-4 py-3 rounded-lg text-sm">
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
               {error}
             </div>
           )}
@@ -222,14 +222,14 @@ export default function CSVUploader({ onSuccess }: CSVUploaderProps) {
             <div className="flex justify-end space-x-3">
               <button
                 onClick={handleClear}
-                className="px-4 py-2 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white"
+                className="px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               >
                 Cancel
               </button>
               <button
                 onClick={handleUpload}
                 disabled={isUploading || parsedData.length === 0}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                className="px-4 py-2 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
               >
                 {isUploading ? (
                   <span>Importing...</span>
@@ -246,7 +246,7 @@ export default function CSVUploader({ onSuccess }: CSVUploaderProps) {
           {result && (
             <button
               onClick={handleClear}
-              className="w-full px-4 py-2 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white"
+              className="w-full px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900"
             >
               Import Another File
             </button>
