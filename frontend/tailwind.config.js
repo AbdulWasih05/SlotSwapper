@@ -8,17 +8,39 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
         },
+        surface: {
+          DEFAULT: '#FFFFFF',
+          secondary: '#F8FAFC',
+          tertiary: '#F1F5F9',
+        },
+        clinical: {
+          border: '#E2E8F0',
+          'border-secondary': '#CBD5E1',
+          text: '#0F172A',
+          'text-secondary': '#334155',
+          'text-muted': '#64748B',
+        },
+      },
+      boxShadow: {
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
+        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
+        'bottom-nav': '0 -1px 3px 0 rgba(0, 0, 0, 0.1)',
+        'top-nav': '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+      },
+      spacing: {
+        'safe-bottom': '72px',
+        'nav-height': '64px',
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-out forwards',
@@ -28,7 +50,6 @@ export default {
         'slide-in-right': 'slideInRight 0.4s ease-out forwards',
         'scale-in': 'scaleIn 0.3s ease-out forwards',
         'shimmer': 'shimmer 1.5s infinite',
-        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
         'float': 'float 3s ease-in-out infinite',
         'bounce-subtle': 'bounceSubtle 1s ease-in-out infinite',
       },
@@ -60,10 +81,6 @@ export default {
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
-        },
-        pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5)' },
-          '50%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
