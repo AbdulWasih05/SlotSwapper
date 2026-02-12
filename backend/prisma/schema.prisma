@@ -14,6 +14,7 @@ model User {
   email     String   @unique @db.VarChar(255)
   password  String   @db.VarChar(255)
   name      String   @db.VarChar(255)
+  phone     String?  @db.VarChar(50)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -84,4 +85,30 @@ model SwapRequest {
   @@index([recipientId])
   @@index([status])
   @@map("swap_requests")
+}
+
+// Clinic model for admin management
+model Clinic {
+  id        Int         @id @default(autoincrement())
+  name      String      @db.VarChar(255)
+  settings  Json        @default("{}")
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  admins    AdminUser[]
+
+  @@map("clinics")
+}
+
+// Admin user model for clinic staff
+model AdminUser {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  name      String   @db.VarChar(255)
+  clinicId  Int?     @map("clinic_id")
+  clinic    Clinic?  @relation(fields: [clinicId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("admin_users")
 }
