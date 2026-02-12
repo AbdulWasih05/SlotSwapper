@@ -1,78 +1,64 @@
-// Dark theme color palette inspired by modern UI design
+// Light clinical theme color palette
 export const colors = {
   // Backgrounds
   background: {
-    primary: '#000000',
-    secondary: '#0a0a0a',
-    tertiary: '#1a1a1a',
-    card: '#111111',
-    cardHover: '#1a1a1a',
+    primary: '#FFFFFF',
+    secondary: '#F8FAFC',
+    tertiary: '#F1F5F9',
+    card: '#FFFFFF',
+    cardHover: '#F8FAFC',
   },
 
-  // Blue accents
-  blue: {
-    50: '#eff6ff',
-    100: '#dbeafe',
-    200: '#bfdbfe',
-    300: '#93c5fd',
-    400: '#60a5fa',
-    500: '#3b82f6',
-    600: '#2563eb',
-    700: '#1d4ed8',
-    800: '#1e40af',
-    900: '#1e3a8a',
+  // Teal accents
+  teal: {
+    50: '#f0fdfa',
+    100: '#ccfbf1',
+    200: '#99f6e4',
+    300: '#5eead4',
+    400: '#2dd4bf',
+    500: '#14b8a6',
+    600: '#0d9488',
+    700: '#0f766e',
+    800: '#115e59',
+    900: '#134e4a',
   },
 
   // Text
   text: {
-    primary: '#ffffff',
-    secondary: '#d1d5db',
-    tertiary: '#9ca3af',
-    muted: '#6b7280',
+    primary: '#0F172A',
+    secondary: '#334155',
+    tertiary: '#64748B',
+    muted: '#64748B',
   },
 
   // Status colors
   status: {
-    success: '#10b981',
-    warning: '#f59e0b',
-    error: '#ef4444',
-    info: '#3b82f6',
+    success: '#059669',
+    warning: '#d97706',
+    error: '#dc2626',
+    info: '#0284c7',
+  },
+
+  // Event colors
+  event: {
+    busy: '#3b82f6',
+    swappable: '#059669',
+    pending: '#d97706',
   },
 
   // Borders
   border: {
-    primary: '#1f2937',
-    secondary: '#374151',
+    primary: '#E2E8F0',
+    secondary: '#CBD5E1',
   },
 };
 
-// Glow effects
-export const glowEffects = {
-  blueLarge: `
-    radial-gradient(
-      circle at center,
-      rgba(59, 130, 246, 0.15) 0%,
-      rgba(59, 130, 246, 0.05) 40%,
-      transparent 70%
-    )
-  `,
-  blueSmall: `
-    radial-gradient(
-      circle at center,
-      rgba(59, 130, 246, 0.2) 0%,
-      rgba(59, 130, 246, 0.1) 50%,
-      transparent 100%
-    )
-  `,
-};
-
-// Shadows
+// Shadows (light mode)
 export const shadows = {
-  sm: '0 1px 2px 0 rgba(0, 0, 0, 0.5)',
-  md: '0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3)',
-  lg: '0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3)',
-  xl: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3)',
-  blueGlow: '0 0 20px rgba(59, 130, 246, 0.3), 0 0 40px rgba(59, 130, 246, 0.1)',
+  sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+  md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+  lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
+  xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
 };
 
 // Transitions

@@ -32,16 +32,16 @@ export default function SwapApprovalCard({
   };
 
   return (
-    <div className="bg-[#111111] rounded-xl border border-gray-800 p-4">
+    <div className="bg-white rounded-xl border border-slate-200 shadow-card p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
-          <Clock className="w-4 h-4 text-yellow-500" />
-          <span className="text-sm text-gray-400">
+          <Clock className="w-4 h-4 text-amber-600" />
+          <span className="text-sm text-slate-500">
             {new Date(swap.createdAt).toLocaleString()}
           </span>
         </div>
-        <span className="px-2 py-1 text-xs font-medium rounded-full bg-yellow-500/20 text-yellow-400">
+        <span className="px-2 py-1 text-xs font-medium rounded-full bg-amber-50 text-amber-700 border border-amber-200">
           Pending
         </span>
       </div>
@@ -49,40 +49,33 @@ export default function SwapApprovalCard({
       {/* Swap Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {/* Requester */}
-        <div className="bg-gray-800/50 rounded-lg p-3">
+        <div className="bg-slate-50 rounded-lg p-3">
           <div className="flex items-center space-x-2 mb-2">
-            <User className="w-4 h-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">{swap.requester.name}</span>
+            <User className="w-4 h-4 text-sky-600" />
+            <span className="text-sm font-medium text-slate-900">{swap.requester.name}</span>
           </div>
-          <p className="text-xs text-gray-500 mb-2">{swap.requester.email}</p>
-          <div className="flex items-center space-x-2 text-sm text-gray-400">
+          <p className="text-xs text-slate-500 mb-2">{swap.requester.email}</p>
+          <div className="flex items-center space-x-2 text-sm text-slate-600">
             <Calendar className="w-4 h-4" />
             <span>{swap.requesterSlot.title}</span>
           </div>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-400 mt-1">
             {formatDate(swap.requesterSlot.startTime)} at {formatTime(swap.requesterSlot.startTime)}
           </p>
         </div>
 
-        {/* Arrow */}
-        <div className="hidden md:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2">
-          <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center">
-            <span className="text-gray-400">⇄</span>
-          </div>
-        </div>
-
         {/* Recipient */}
-        <div className="bg-gray-800/50 rounded-lg p-3">
+        <div className="bg-slate-50 rounded-lg p-3">
           <div className="flex items-center space-x-2 mb-2">
-            <User className="w-4 h-4 text-green-400" />
-            <span className="text-sm font-medium text-white">{swap.recipient.name}</span>
+            <User className="w-4 h-4 text-emerald-600" />
+            <span className="text-sm font-medium text-slate-900">{swap.recipient.name}</span>
           </div>
-          <p className="text-xs text-gray-500 mb-2">{swap.recipient.email}</p>
-          <div className="flex items-center space-x-2 text-sm text-gray-400">
+          <p className="text-xs text-slate-500 mb-2">{swap.recipient.email}</p>
+          <div className="flex items-center space-x-2 text-sm text-slate-600">
             <Calendar className="w-4 h-4" />
             <span>{swap.recipientSlot.title}</span>
           </div>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-400 mt-1">
             {formatDate(swap.recipientSlot.startTime)} at {formatTime(swap.recipientSlot.startTime)}
           </p>
         </div>
@@ -93,7 +86,7 @@ export default function SwapApprovalCard({
         <button
           onClick={() => onReject(swap.id)}
           disabled={isLoading}
-          className="flex items-center space-x-2 px-4 py-2 rounded-lg text-red-400 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center space-x-2 px-4 py-2 rounded-lg text-red-600 bg-white border border-red-200 hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           <X className="w-4 h-4" />
           <span>Reject</span>
@@ -101,7 +94,7 @@ export default function SwapApprovalCard({
         <button
           onClick={() => onApprove(swap.id)}
           disabled={isLoading}
-          className="flex items-center space-x-2 px-4 py-2 rounded-lg text-green-400 bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center space-x-2 px-4 py-2 rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           <Check className="w-4 h-4" />
           <span>Approve</span>

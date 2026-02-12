@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useEventStore } from '../store/eventStore';
 import { useSwapStore } from '../store/swapStore';
-import { Calendar, Users, ArrowLeftRight, Sparkles } from 'lucide-react';
+import { Calendar, Users, ArrowLeftRight } from 'lucide-react';
 
 export default function Dashboard() {
   const { user } = useAuthStore();
-  const { events, fetchEvents, isLoading: eventsLoading } = useEventStore();
-  const { incomingRequests, outgoingRequests, fetchSwapRequests, isLoading: swapsLoading } = useSwapStore();
+  const { events, fetchEvents } = useEventStore();
+  const { incomingRequests, outgoingRequests, fetchSwapRequests } = useSwapStore();
 
   useEffect(() => {
     fetchEvents();
@@ -19,147 +19,119 @@ export default function Dashboard() {
   const pendingIncoming = incomingRequests.filter((r) => r.status === 'PENDING');
   const pendingOutgoing = outgoingRequests.filter((r) => r.status === 'PENDING');
 
-  return (
-    <div className="min-h-screen bg-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Section with Blue Glow */}
-        <div className="relative mb-12 overflow-hidden animate-fade-in">
-          {/* Blue Glow Effect */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
+  };
 
-          <div className="relative z-10 text-center py-8">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-4 animate-fade-in-down">
-              <Sparkles className="w-4 h-4" />
-              <span>Welcome to your dashboard</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 animate-fade-in-up">
-              Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">{user?.name}</span>!
-            </h1>
-            <p className="text-gray-400 text-lg animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-              Manage your schedule and swap time slots with others
-            </p>
-          </div>
+  return (
+    <div className="min-h-screen bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {/* Greeting */}
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-slate-900">
+            {getGreeting()}, {user?.name}
+          </h1>
+          <p className="text-slate-500 mt-1">
+            Manage your schedule and swap time slots with others
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {/* Stat Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           {/* Total Events Card */}
-          <div 
-            className="group bg-[#111111] rounded-xl shadow-lg border border-gray-800 p-6 
-                       hover:border-blue-500/50 transition-all duration-300 
-                       hover:shadow-blue-500/20 hover:shadow-xl hover:-translate-y-1
-                       animate-fade-in-up"
-            style={{ animationDelay: '150ms' }}
-          >
+          <div className="bg-white rounded-xl border border-slate-200 shadow-card p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm">Total Events</p>
-                <p className="text-4xl font-bold text-white mt-1 tabular-nums">{events.length}</p>
+                <p className="text-sm text-slate-500">Total Events</p>
+                <p className="text-3xl font-bold text-slate-900 mt-1 tabular-nums">{events.length}</p>
               </div>
-              <div className="p-3 bg-blue-500/10 rounded-xl group-hover:scale-110 group-hover:bg-blue-500/20 transition-all duration-300">
-                <Calendar className="w-8 h-8 text-blue-500" />
+              <div className="p-3 bg-sky-50 rounded-xl">
+                <Calendar className="w-6 h-6 text-sky-600" />
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-gray-800/50">
+            <div className="mt-4 pt-4 border-t border-slate-100">
               <Link
                 to="/calendar"
-                className="text-blue-500 hover:text-blue-400 text-sm font-semibold inline-flex items-center group/link"
+                className="text-teal-600 hover:text-teal-700 text-sm font-semibold"
               >
-                <span>View Calendar</span>
-                <span className="ml-1 transform group-hover/link:translate-x-1 transition-transform">→</span>
+                View Calendar &rarr;
               </Link>
             </div>
           </div>
 
           {/* Swappable Slots Card */}
-          <div 
-            className="group bg-[#111111] rounded-xl shadow-lg border border-gray-800 p-6 
-                       hover:border-green-500/50 transition-all duration-300 
-                       hover:shadow-green-500/20 hover:shadow-xl hover:-translate-y-1
-                       animate-fade-in-up"
-            style={{ animationDelay: '250ms' }}
-          >
+          <div className="bg-white rounded-xl border border-slate-200 shadow-card p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm">Swappable Slots</p>
-                <p className="text-4xl font-bold text-white mt-1 tabular-nums">{swappableEvents.length}</p>
+                <p className="text-sm text-slate-500">Swappable Slots</p>
+                <p className="text-3xl font-bold text-slate-900 mt-1 tabular-nums">{swappableEvents.length}</p>
               </div>
-              <div className="p-3 bg-green-500/10 rounded-xl group-hover:scale-110 group-hover:bg-green-500/20 transition-all duration-300">
-                <ArrowLeftRight className="w-8 h-8 text-green-500" />
+              <div className="p-3 bg-emerald-50 rounded-xl">
+                <ArrowLeftRight className="w-6 h-6 text-emerald-600" />
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-gray-800/50">
+            <div className="mt-4 pt-4 border-t border-slate-100">
               <Link
                 to="/marketplace"
-                className="text-green-500 hover:text-green-400 text-sm font-semibold inline-flex items-center group/link"
+                className="text-teal-600 hover:text-teal-700 text-sm font-semibold"
               >
-                <span>Browse Marketplace</span>
-                <span className="ml-1 transform group-hover/link:translate-x-1 transition-transform">→</span>
+                Browse Marketplace &rarr;
               </Link>
             </div>
           </div>
 
           {/* Pending Requests Card */}
-          <div 
-            className="group bg-[#111111] rounded-xl shadow-lg border border-gray-800 p-6 
-                       hover:border-purple-500/50 transition-all duration-300 
-                       hover:shadow-purple-500/20 hover:shadow-xl hover:-translate-y-1
-                       animate-fade-in-up"
-            style={{ animationDelay: '350ms' }}
-          >
+          <div className="bg-white rounded-xl border border-slate-200 shadow-card p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm">Pending Requests</p>
-                <p className="text-4xl font-bold text-white mt-1 tabular-nums">
+                <p className="text-sm text-slate-500">Pending Requests</p>
+                <p className="text-3xl font-bold text-slate-900 mt-1 tabular-nums">
                   {pendingIncoming.length + pendingOutgoing.length}
                 </p>
               </div>
-              <div className="p-3 bg-purple-500/10 rounded-xl group-hover:scale-110 group-hover:bg-purple-500/20 transition-all duration-300">
-                <Users className="w-8 h-8 text-purple-500" />
+              <div className="p-3 bg-violet-50 rounded-xl">
+                <Users className="w-6 h-6 text-violet-600" />
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-gray-800/50">
+            <div className="mt-4 pt-4 border-t border-slate-100">
               <Link
                 to="/requests"
-                className="text-purple-500 hover:text-purple-400 text-sm font-semibold inline-flex items-center group/link"
+                className="text-teal-600 hover:text-teal-700 text-sm font-semibold"
               >
-                <span>View Requests</span>
-                <span className="ml-1 transform group-hover/link:translate-x-1 transition-transform">→</span>
+                View Requests &rarr;
               </Link>
             </div>
           </div>
         </div>
 
+        {/* Request Lists */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Incoming Requests */}
-          <div 
-            className="bg-[#111111] rounded-xl shadow-lg border border-gray-800 p-6 animate-fade-in-up"
-            style={{ animationDelay: '450ms' }}
-          >
-            <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+          <div className="bg-white rounded-xl border border-slate-200 shadow-card p-6">
+            <h2 className="text-lg font-semibold text-slate-900 mb-4">
               Incoming Requests ({pendingIncoming.length})
             </h2>
             {pendingIncoming.length === 0 ? (
               <div className="text-center py-8">
-                <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Users className="w-6 h-6 text-gray-600" />
+                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Users className="w-6 h-6 text-slate-300" />
                 </div>
-                <p className="text-gray-500">No pending incoming requests</p>
+                <p className="text-slate-400">No pending incoming requests</p>
               </div>
             ) : (
               <ul className="space-y-3">
-                {pendingIncoming.slice(0, 3).map((request, index) => (
+                {pendingIncoming.slice(0, 3).map((request) => (
                   <li
                     key={request.id}
-                    className="border-l-4 border-blue-500 pl-4 py-3 bg-[#1a1a1a] rounded-r-lg 
-                               hover:bg-[#222222] hover:border-blue-400 transition-all duration-200
-                               hover:translate-x-1 cursor-pointer animate-fade-in-up"
-                    style={{ animationDelay: `${500 + index * 100}ms` }}
+                    className="border-l-3 border-sky-500 pl-4 py-3 bg-slate-50 rounded-r-lg"
                   >
-                    <p className="font-medium text-white">
+                    <p className="font-medium text-slate-900">
                       {request.requester.name} wants to swap
                     </p>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-slate-500">
                       {request.recipientSlot.title}
                     </p>
                   </li>
@@ -169,44 +141,36 @@ export default function Dashboard() {
             {pendingIncoming.length > 3 && (
               <Link
                 to="/requests"
-                className="text-blue-500 hover:text-blue-400 text-sm font-semibold mt-4 inline-flex items-center group"
+                className="text-teal-600 hover:text-teal-700 text-sm font-semibold mt-4 inline-block"
               >
-                <span>View all {pendingIncoming.length} requests</span>
-                <span className="ml-1 transform group-hover:translate-x-1 transition-transform">→</span>
+                View all {pendingIncoming.length} requests &rarr;
               </Link>
             )}
           </div>
 
           {/* Outgoing Requests */}
-          <div 
-            className="bg-[#111111] rounded-xl shadow-lg border border-gray-800 p-6 animate-fade-in-up"
-            style={{ animationDelay: '500ms' }}
-          >
-            <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
+          <div className="bg-white rounded-xl border border-slate-200 shadow-card p-6">
+            <h2 className="text-lg font-semibold text-slate-900 mb-4">
               Outgoing Requests ({pendingOutgoing.length})
             </h2>
             {pendingOutgoing.length === 0 ? (
               <div className="text-center py-8">
-                <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <ArrowLeftRight className="w-6 h-6 text-gray-600" />
+                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <ArrowLeftRight className="w-6 h-6 text-slate-300" />
                 </div>
-                <p className="text-gray-500">No pending outgoing requests</p>
+                <p className="text-slate-400">No pending outgoing requests</p>
               </div>
             ) : (
               <ul className="space-y-3">
-                {pendingOutgoing.slice(0, 3).map((request, index) => (
+                {pendingOutgoing.slice(0, 3).map((request) => (
                   <li
                     key={request.id}
-                    className="border-l-4 border-purple-500 pl-4 py-3 bg-[#1a1a1a] rounded-r-lg 
-                               hover:bg-[#222222] hover:border-purple-400 transition-all duration-200
-                               hover:translate-x-1 cursor-pointer animate-fade-in-up"
-                    style={{ animationDelay: `${550 + index * 100}ms` }}
+                    className="border-l-3 border-violet-500 pl-4 py-3 bg-slate-50 rounded-r-lg"
                   >
-                    <p className="font-medium text-white">
+                    <p className="font-medium text-slate-900">
                       Requested from {request.recipient.name}
                     </p>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-slate-500">
                       {request.requesterSlot.title}
                     </p>
                   </li>
@@ -216,10 +180,9 @@ export default function Dashboard() {
             {pendingOutgoing.length > 3 && (
               <Link
                 to="/requests"
-                className="text-purple-500 hover:text-purple-400 text-sm font-semibold mt-4 inline-flex items-center group"
+                className="text-teal-600 hover:text-teal-700 text-sm font-semibold mt-4 inline-block"
               >
-                <span>View all {pendingOutgoing.length} requests</span>
-                <span className="ml-1 transform group-hover:translate-x-1 transition-transform">→</span>
+                View all {pendingOutgoing.length} requests &rarr;
               </Link>
             )}
           </div>

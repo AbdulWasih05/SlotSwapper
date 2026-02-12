@@ -46,7 +46,7 @@ export default function AdminDashboard() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
       </div>
     );
   }
@@ -54,8 +54,8 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-        <p className="text-gray-400">Overview of your clinic operations</p>
+        <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+        <p className="text-slate-500">Overview of your clinic operations</p>
       </div>
 
       {/* Stats Grid */}
@@ -89,38 +89,38 @@ export default function AdminDashboard() {
       {/* Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Appointments */}
-        <div className="bg-[#111111] rounded-xl border border-gray-800 p-6">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-card p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-white">Recent Appointments</h2>
+            <h2 className="text-lg font-semibold text-slate-900">Recent Appointments</h2>
             <Link
               to="/admin/calendar"
-              className="text-sm text-blue-400 hover:text-blue-300 flex items-center"
+              className="text-sm text-teal-600 hover:text-teal-700 flex items-center"
             >
               View all <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
           <div className="space-y-3">
             {recentAppointments.length === 0 ? (
-              <p className="text-gray-500 text-sm">No recent appointments</p>
+              <p className="text-slate-400 text-sm">No recent appointments</p>
             ) : (
               recentAppointments.map((apt) => (
                 <div
                   key={apt.id}
-                  className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg"
+                  className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
                 >
                   <div>
-                    <p className="text-white font-medium">{apt.title}</p>
-                    <p className="text-sm text-gray-400">{apt.user?.name}</p>
+                    <p className="text-slate-900 font-medium">{apt.title}</p>
+                    <p className="text-sm text-slate-500">{apt.user?.name}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-gray-400">{formatDate(apt.startTime)}</p>
+                    <p className="text-sm text-slate-500">{formatDate(apt.startTime)}</p>
                     <span
-                      className={`text-xs px-2 py-1 rounded-full ${
+                      className={`text-xs px-2 py-1 rounded-full font-medium ${
                         apt.status === 'SWAPPABLE'
-                          ? 'bg-green-500/20 text-green-400'
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                           : apt.status === 'SWAP_PENDING'
-                          ? 'bg-yellow-500/20 text-yellow-400'
-                          : 'bg-gray-500/20 text-gray-400'
+                          ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                          : 'bg-slate-100 text-slate-600 border border-slate-200'
                       }`}
                     >
                       {apt.status}
@@ -133,19 +133,19 @@ export default function AdminDashboard() {
         </div>
 
         {/* Pending Swaps */}
-        <div className="bg-[#111111] rounded-xl border border-gray-800 p-6">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-card p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-white">Pending Swap Requests</h2>
+            <h2 className="text-lg font-semibold text-slate-900">Pending Swap Requests</h2>
             <Link
               to="/admin/swaps"
-              className="text-sm text-blue-400 hover:text-blue-300 flex items-center"
+              className="text-sm text-teal-600 hover:text-teal-700 flex items-center"
             >
               View all <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
           <div className="space-y-3">
             {recentSwaps.filter((s) => s.status === 'PENDING').length === 0 ? (
-              <p className="text-gray-500 text-sm">No pending swap requests</p>
+              <p className="text-slate-400 text-sm">No pending swap requests</p>
             ) : (
               recentSwaps
                 .filter((s) => s.status === 'PENDING')
@@ -153,17 +153,17 @@ export default function AdminDashboard() {
                 .map((swap) => (
                   <div
                     key={swap.id}
-                    className="p-3 bg-gray-800/50 rounded-lg"
+                    className="p-3 bg-slate-50 rounded-lg"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <p className="text-white font-medium text-sm">
+                      <p className="text-slate-900 font-medium text-sm">
                         {swap.requester.name} ↔ {swap.recipient.name}
                       </p>
-                      <span className="text-xs px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400">
+                      <span className="text-xs px-2 py-1 rounded-full font-medium bg-amber-50 text-amber-700 border border-amber-200">
                         Pending
                       </span>
                     </div>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-slate-500">
                       {formatDate(swap.createdAt)}
                     </p>
                   </div>
@@ -174,31 +174,31 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Patients */}
-      <div className="bg-[#111111] rounded-xl border border-gray-800 p-6">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-card p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-white">Recent Patients</h2>
+          <h2 className="text-lg font-semibold text-slate-900">Recent Patients</h2>
           <Link
             to="/admin/patients"
-            className="text-sm text-blue-400 hover:text-blue-300 flex items-center"
+            className="text-sm text-teal-600 hover:text-teal-700 flex items-center"
           >
             View all <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {recentPatients.length === 0 ? (
-            <p className="text-gray-500 text-sm col-span-full">No patients yet</p>
+            <p className="text-slate-400 text-sm col-span-full">No patients yet</p>
           ) : (
             recentPatients.map((patient) => (
               <div
                 key={patient.id}
-                className="flex items-center space-x-3 p-3 bg-gray-800/50 rounded-lg"
+                className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg"
               >
-                <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-semibold">
+                <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-teal-600 font-semibold">
                   {patient.name.charAt(0).toUpperCase()}
                 </div>
                 <div className="overflow-hidden">
-                  <p className="text-white font-medium truncate">{patient.name}</p>
-                  <p className="text-sm text-gray-400 truncate">{patient.email}</p>
+                  <p className="text-slate-900 font-medium truncate">{patient.name}</p>
+                  <p className="text-sm text-slate-500 truncate">{patient.email}</p>
                 </div>
               </div>
             ))

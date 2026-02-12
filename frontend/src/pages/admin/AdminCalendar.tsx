@@ -124,9 +124,9 @@ export default function AdminCalendar() {
   const eventStyleGetter = (event: CalendarEvent) => {
     let backgroundColor = '#3b82f6';
     if (event.resource.status === 'SWAPPABLE') {
-      backgroundColor = '#22c55e';
+      backgroundColor = '#059669';
     } else if (event.resource.status === 'SWAP_PENDING') {
-      backgroundColor = '#eab308';
+      backgroundColor = '#d97706';
     }
 
     return {
@@ -145,8 +145,8 @@ export default function AdminCalendar() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Calendar</h1>
-          <p className="text-gray-400">Manage appointments</p>
+          <h1 className="text-2xl font-bold text-slate-900">Calendar</h1>
+          <p className="text-slate-500">Manage appointments</p>
         </div>
         <button
           onClick={() => {
@@ -154,7 +154,7 @@ export default function AdminCalendar() {
             setDefaultStartTime(new Date());
             setShowForm(true);
           }}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          className="flex items-center space-x-2 px-4 py-2 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition-colors"
         >
           <Plus className="w-5 h-5" />
           <span>Add Appointment</span>
@@ -165,26 +165,26 @@ export default function AdminCalendar() {
       <div className="flex flex-wrap items-center gap-4 text-sm">
         <div className="flex items-center space-x-2">
           <div className="w-4 h-4 rounded bg-blue-500"></div>
-          <span className="text-gray-400">Busy</span>
+          <span className="text-slate-500">Busy</span>
         </div>
         <div className="flex items-center space-x-2">
-          <div className="w-4 h-4 rounded bg-green-500"></div>
-          <span className="text-gray-400">Swappable</span>
+          <div className="w-4 h-4 rounded bg-emerald-600"></div>
+          <span className="text-slate-500">Swappable</span>
         </div>
         <div className="flex items-center space-x-2">
-          <div className="w-4 h-4 rounded bg-yellow-500"></div>
-          <span className="text-gray-400">Swap Pending</span>
+          <div className="w-4 h-4 rounded bg-amber-600"></div>
+          <span className="text-slate-500">Swap Pending</span>
         </div>
       </div>
 
       {/* Calendar */}
-      <div className="bg-[#111111] rounded-xl border border-gray-800 p-4">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-card p-4">
         {isLoading ? (
           <div className="flex items-center justify-center h-96">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
           </div>
         ) : (
-          <div className="calendar-dark-theme h-[600px]">
+          <div className="calendar-clinical h-[600px]">
             <Calendar
               localizer={localizer}
               events={events}
@@ -204,24 +204,24 @@ export default function AdminCalendar() {
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => onNavigate('PREV')}
-                        className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg"
+                        className="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg"
                       >
                         <ChevronLeft className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => onNavigate('TODAY')}
-                        className="px-3 py-1 text-sm text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg"
+                        className="px-3 py-1 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg"
                       >
                         Today
                       </button>
                       <button
                         onClick={() => onNavigate('NEXT')}
-                        className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg"
+                        className="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg"
                       >
                         <ChevronRight className="w-5 h-5" />
                       </button>
                     </div>
-                    <span className="text-lg font-semibold text-white">{label}</span>
+                    <span className="text-lg font-semibold text-slate-900">{label}</span>
                     <div className="flex items-center space-x-2">
                       {[Views.MONTH, Views.WEEK, Views.DAY].map((v) => (
                         <button
@@ -229,8 +229,8 @@ export default function AdminCalendar() {
                           onClick={() => setView(v)}
                           className={`px-3 py-1 text-sm rounded-lg transition-colors ${
                             view === v
-                              ? 'bg-blue-600 text-white'
-                              : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                              ? 'bg-teal-600 text-white'
+                              : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
                           }`}
                         >
                           {v.charAt(0).toUpperCase() + v.slice(1)}
@@ -247,7 +247,7 @@ export default function AdminCalendar() {
 
       {/* Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="relative">
             <AppointmentForm
               appointment={selectedAppointment}
@@ -263,7 +263,7 @@ export default function AdminCalendar() {
             {selectedAppointment && (
               <button
                 onClick={handleDelete}
-                className="absolute top-4 right-16 p-2 text-red-400 hover:bg-red-500/20 rounded-lg"
+                className="absolute top-4 right-16 p-2 text-red-500 hover:bg-red-50 rounded-lg"
                 title="Delete appointment"
               >
                 <Trash2 className="w-5 h-5" />
@@ -272,74 +272,6 @@ export default function AdminCalendar() {
           </div>
         </div>
       )}
-
-      <style>{`
-        .calendar-dark-theme .rbc-calendar {
-          background: transparent;
-          color: #9ca3af;
-        }
-        .calendar-dark-theme .rbc-header {
-          background: #1f2937;
-          border-color: #374151;
-          padding: 8px;
-        }
-        .calendar-dark-theme .rbc-header + .rbc-header {
-          border-left-color: #374151;
-        }
-        .calendar-dark-theme .rbc-month-view,
-        .calendar-dark-theme .rbc-time-view {
-          border-color: #374151;
-        }
-        .calendar-dark-theme .rbc-day-bg {
-          background: transparent;
-        }
-        .calendar-dark-theme .rbc-day-bg + .rbc-day-bg {
-          border-left-color: #374151;
-        }
-        .calendar-dark-theme .rbc-month-row + .rbc-month-row {
-          border-top-color: #374151;
-        }
-        .calendar-dark-theme .rbc-off-range-bg {
-          background: #0a0a0a;
-        }
-        .calendar-dark-theme .rbc-today {
-          background: rgba(59, 130, 246, 0.1);
-        }
-        .calendar-dark-theme .rbc-time-content {
-          border-top-color: #374151;
-        }
-        .calendar-dark-theme .rbc-time-content > * + * > * {
-          border-left-color: #374151;
-        }
-        .calendar-dark-theme .rbc-timeslot-group {
-          border-bottom-color: #374151;
-        }
-        .calendar-dark-theme .rbc-time-slot {
-          border-top-color: #1f2937;
-        }
-        .calendar-dark-theme .rbc-time-gutter {
-          background: #111111;
-        }
-        .calendar-dark-theme .rbc-time-header-content {
-          border-left-color: #374151;
-        }
-        .calendar-dark-theme .rbc-allday-cell {
-          background: #111111;
-        }
-        .calendar-dark-theme .rbc-current-time-indicator {
-          background-color: #ef4444;
-        }
-        .calendar-dark-theme .rbc-event {
-          padding: 2px 5px;
-          font-size: 12px;
-        }
-        .calendar-dark-theme .rbc-event.rbc-selected {
-          background-color: #2563eb;
-        }
-        .calendar-dark-theme .rbc-show-more {
-          color: #60a5fa;
-        }
-      `}</style>
     </div>
   );
 }

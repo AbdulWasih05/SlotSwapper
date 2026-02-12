@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
+import { Calendar, dateFnsLocalizer, Views } from 'react-big-calendar';
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import { useEventStore } from '../store/eventStore';
@@ -38,6 +38,9 @@ export default function CalendarPage() {
     startTime: null as Date | null,
     endTime: null as Date | null,
   });
+
+  // Responsive default view
+  const defaultView = typeof window !== 'undefined' && window.innerWidth < 640 ? Views.DAY : Views.WEEK;
 
   useEffect(() => {
     fetchEvents();
@@ -126,8 +129,8 @@ export default function CalendarPage() {
     const newStatus = selectedEvent.status === 'BUSY' ? 'SWAPPABLE' : 'BUSY';
     try {
       await toggleEventStatus(selectedEvent.id, newStatus);
-      const message = newStatus === 'SWAPPABLE' 
-        ? '✨ Event is now available for swapping!'
+      const message = newStatus === 'SWAPPABLE'
+        ? 'Event is now available for swapping!'
         : 'Event marked as BUSY';
       toast.success(message, {
         id: `status-${selectedEvent.id}`,
@@ -141,8 +144,8 @@ export default function CalendarPage() {
   const eventStyleGetter = (event: CalendarEvent) => {
     const status = event.resource.status;
     let backgroundColor = '#3b82f6'; // blue for BUSY
-    if (status === 'SWAPPABLE') backgroundColor = '#10b981'; // green
-    if (status === 'SWAP_PENDING') backgroundColor = '#f59e0b'; // orange
+    if (status === 'SWAPPABLE') backgroundColor = '#059669'; // emerald
+    if (status === 'SWAP_PENDING') backgroundColor = '#d97706'; // amber
 
     return {
       style: {
@@ -157,25 +160,25 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 min-h-screen bg-black">
+    <div className="p-4 sm:p-6 lg:p-8 min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto">
-        {/* Header - Stacked on mobile, side-by-side on desktop */}
+        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-6">
           <div className="flex-1">
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">My Calendar</h1>
-            {/* Legend - Compact on mobile */}
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">My Calendar</h1>
+            {/* Legend */}
             <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-3">
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 bg-blue-500 rounded-sm"></div>
-                <span className="text-xs sm:text-sm text-gray-400">Busy</span>
+                <span className="text-xs sm:text-sm text-slate-500">Busy</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 bg-green-500 rounded-sm"></div>
-                <span className="text-xs sm:text-sm text-gray-400">Swappable</span>
+                <div className="w-3 h-3 bg-emerald-600 rounded-sm"></div>
+                <span className="text-xs sm:text-sm text-slate-500">Swappable</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 bg-orange-500 rounded-sm"></div>
-                <span className="text-xs sm:text-sm text-gray-400">Pending</span>
+                <div className="w-3 h-3 bg-amber-600 rounded-sm"></div>
+                <span className="text-xs sm:text-sm text-slate-500">Pending</span>
               </div>
             </div>
           </div>
@@ -185,22 +188,22 @@ export default function CalendarPage() {
               setFormData({ title: '', startTime: null, endTime: null });
               setShowModal(true);
             }}
-            className="flex items-center justify-center gap-2 bg-blue-600 text-white 
-                       px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-sm sm:text-base font-medium
-                       hover:bg-blue-700 transition-all hover:scale-[1.02] active:scale-[0.98] 
-                       shadow-lg shadow-blue-500/20 w-full sm:w-auto"
+            className="flex items-center justify-center gap-2 bg-teal-600 text-white
+                       px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg text-sm sm:text-base font-medium
+                       hover:bg-teal-700 active:bg-teal-800 transition-all shadow-sm w-full sm:w-auto"
           >
             <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>New Event</span>
           </button>
         </div>
 
-        <div className="bg-[#111111] rounded-xl shadow-lg border border-gray-800 p-3 sm:p-4 lg:p-6 calendar-dark" style={{ height: 'calc(100vh - 220px)', minHeight: '500px' }}>
+        <div className="bg-white rounded-xl border border-slate-200 shadow-card p-3 sm:p-4 lg:p-6 calendar-clinical" style={{ height: 'calc(100vh - 220px)', minHeight: '500px' }}>
           <Calendar
             localizer={localizer}
             events={calendarEvents}
             startAccessor="start"
             endAccessor="end"
+            defaultView={defaultView}
             onSelectSlot={handleSelectSlot}
             onSelectEvent={handleSelectEvent}
             eventPropGetter={eventStyleGetter}
@@ -210,16 +213,17 @@ export default function CalendarPage() {
         </div>
       </div>
 
+      {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-[#111111] rounded-2xl max-w-md w-full p-6 border border-gray-800 shadow-2xl">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 border border-slate-200 shadow-xl">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-2xl font-bold text-slate-900">
                 {selectedEvent ? 'Edit Event' : 'New Event'}
               </h2>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-slate-400 hover:text-slate-600 transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -227,7 +231,7 @@ export default function CalendarPage() {
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Title
                 </label>
                 <input
@@ -235,7 +239,7 @@ export default function CalendarPage() {
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   required
-                  className="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-500 transition-all"
+                  className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-slate-900 placeholder-slate-400 transition-all"
                   placeholder="Event title"
                 />
               </div>
@@ -258,18 +262,18 @@ export default function CalendarPage() {
               />
 
               {selectedEvent && (
-                <div className="border-t border-gray-800 pt-5">
-                  <p className="text-sm font-medium text-gray-300 mb-2">Status</p>
+                <div className="border-t border-slate-200 pt-5">
+                  <p className="text-sm font-medium text-slate-700 mb-2">Status</p>
                   <button
                     type="button"
                     onClick={handleToggleStatus}
                     disabled={selectedEvent.status === 'SWAP_PENDING'}
                     className={`w-full py-3 px-4 rounded-lg font-medium transition-all ${
                       selectedEvent.status === 'SWAPPABLE'
-                        ? 'bg-green-600/20 text-green-400 border border-green-600/50 hover:bg-green-600/30'
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
                         : selectedEvent.status === 'SWAP_PENDING'
-                        ? 'bg-orange-600/20 text-orange-400 border border-orange-600/50 cursor-not-allowed'
-                        : 'bg-blue-600/20 text-blue-400 border border-blue-600/50 hover:bg-blue-600/30'
+                        ? 'bg-amber-50 text-amber-700 border border-amber-200 cursor-not-allowed'
+                        : 'bg-sky-50 text-sky-700 border border-sky-200 hover:bg-sky-100'
                     }`}
                   >
                     {selectedEvent.status === 'SWAP_PENDING'
@@ -284,7 +288,7 @@ export default function CalendarPage() {
               <div className="flex space-x-3 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-blue-500/20"
+                  className="flex-1 bg-teal-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-teal-700 active:bg-teal-800 transition-all shadow-sm"
                 >
                   {selectedEvent ? 'Update' : 'Create'}
                 </button>
@@ -292,7 +296,7 @@ export default function CalendarPage() {
                   <button
                     type="button"
                     onClick={handleDelete}
-                    className="bg-red-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-red-700 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-red-500/20"
+                    className="bg-red-50 text-red-600 border border-red-200 py-3 px-4 rounded-lg font-medium hover:bg-red-100 transition-all"
                   >
                     Delete
                   </button>

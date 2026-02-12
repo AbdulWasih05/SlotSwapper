@@ -69,8 +69,8 @@ export default function AdminSwaps() {
       header: 'Requester',
       render: (swap: AdminSwapRequest) => (
         <div>
-          <p className="font-medium text-white">{swap.requester.name}</p>
-          <p className="text-xs text-gray-500">{swap.requester.email}</p>
+          <p className="font-medium text-slate-900">{swap.requester.name}</p>
+          <p className="text-xs text-slate-500">{swap.requester.email}</p>
         </div>
       ),
     },
@@ -79,8 +79,8 @@ export default function AdminSwaps() {
       header: 'Offers',
       render: (swap: AdminSwapRequest) => (
         <div>
-          <p className="text-gray-300">{swap.requesterSlot.title}</p>
-          <p className="text-xs text-gray-500">{formatDate(swap.requesterSlot.startTime)}</p>
+          <p className="text-slate-700">{swap.requesterSlot.title}</p>
+          <p className="text-xs text-slate-500">{formatDate(swap.requesterSlot.startTime)}</p>
         </div>
       ),
     },
@@ -89,8 +89,8 @@ export default function AdminSwaps() {
       header: 'Recipient',
       render: (swap: AdminSwapRequest) => (
         <div>
-          <p className="font-medium text-white">{swap.recipient.name}</p>
-          <p className="text-xs text-gray-500">{swap.recipient.email}</p>
+          <p className="font-medium text-slate-900">{swap.recipient.name}</p>
+          <p className="text-xs text-slate-500">{swap.recipient.email}</p>
         </div>
       ),
     },
@@ -99,8 +99,8 @@ export default function AdminSwaps() {
       header: 'Wants',
       render: (swap: AdminSwapRequest) => (
         <div>
-          <p className="text-gray-300">{swap.recipientSlot.title}</p>
-          <p className="text-xs text-gray-500">{formatDate(swap.recipientSlot.startTime)}</p>
+          <p className="text-slate-700">{swap.recipientSlot.title}</p>
+          <p className="text-xs text-slate-500">{formatDate(swap.recipientSlot.startTime)}</p>
         </div>
       ),
     },
@@ -111,10 +111,10 @@ export default function AdminSwaps() {
         <span
           className={`px-2 py-1 text-xs font-medium rounded-full ${
             swap.status === 'PENDING'
-              ? 'bg-yellow-500/20 text-yellow-400'
+              ? 'bg-amber-50 text-amber-700 border border-amber-200'
               : swap.status === 'ACCEPTED'
-              ? 'bg-green-500/20 text-green-400'
-              : 'bg-red-500/20 text-red-400'
+              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+              : 'bg-red-50 text-red-700 border border-red-200'
           }`}
         >
           {swap.status}
@@ -125,7 +125,7 @@ export default function AdminSwaps() {
       key: 'createdAt',
       header: 'Created',
       render: (swap: AdminSwapRequest) => (
-        <span className="text-gray-500 text-sm">{formatDate(swap.createdAt)}</span>
+        <span className="text-slate-500 text-sm">{formatDate(swap.createdAt)}</span>
       ),
     },
   ];
@@ -133,41 +133,41 @@ export default function AdminSwaps() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white">Swap Queue</h1>
-        <p className="text-gray-400">Manage swap requests between patients</p>
+        <h1 className="text-2xl font-bold text-slate-900">Swap Queue</h1>
+        <p className="text-slate-500">Manage swap requests between patients</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center space-x-4 border-b border-gray-800">
+      <div className="flex items-center space-x-4 border-b border-slate-200">
         <button
           onClick={() => setActiveTab('pending')}
           className={`pb-3 px-1 text-sm font-medium transition-colors relative ${
             activeTab === 'pending'
-              ? 'text-blue-500'
-              : 'text-gray-400 hover:text-white'
+              ? 'text-teal-600'
+              : 'text-slate-400 hover:text-slate-900'
           }`}
         >
           Pending Approval
           {pendingSwaps.length > 0 && (
-            <span className="ml-2 px-2 py-0.5 text-xs bg-yellow-500/20 text-yellow-400 rounded-full">
+            <span className="ml-2 px-2 py-0.5 text-xs bg-amber-50 text-amber-700 border border-amber-200 rounded-full">
               {pendingSwaps.length}
             </span>
           )}
           {activeTab === 'pending' && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-500" />
           )}
         </button>
         <button
           onClick={() => setActiveTab('all')}
           className={`pb-3 px-1 text-sm font-medium transition-colors relative ${
             activeTab === 'all'
-              ? 'text-blue-500'
-              : 'text-gray-400 hover:text-white'
+              ? 'text-teal-600'
+              : 'text-slate-400 hover:text-slate-900'
           }`}
         >
           All Requests
           {activeTab === 'all' && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-500" />
           )}
         </button>
       </div>
@@ -177,11 +177,11 @@ export default function AdminSwaps() {
         <div className="space-y-4">
           {isLoading ? (
             <div className="flex items-center justify-center h-32">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
             </div>
           ) : pendingSwaps.length === 0 ? (
-            <div className="bg-[#111111] rounded-xl border border-gray-800 p-8 text-center">
-              <p className="text-gray-500">No pending swap requests</p>
+            <div className="bg-white rounded-xl border border-slate-200 shadow-card p-8 text-center">
+              <p className="text-slate-400">No pending swap requests</p>
             </div>
           ) : (
             pendingSwaps.map((swap) => (
@@ -200,11 +200,11 @@ export default function AdminSwaps() {
         <div className="space-y-4">
           {/* Status filter */}
           <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-400">Filter by status:</span>
+            <span className="text-sm text-slate-500">Filter by status:</span>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-1.5 bg-[#1a1a1a] border border-gray-700 rounded-lg text-white text-sm focus:ring-2 focus:ring-blue-500"
+              className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
             >
               <option value="">All</option>
               <option value="PENDING">Pending</option>

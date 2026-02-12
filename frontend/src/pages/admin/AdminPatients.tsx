@@ -83,10 +83,10 @@ export default function AdminPatients() {
       header: 'Name',
       render: (patient: AdminPatient) => (
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-semibold text-sm">
+          <div className="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center text-teal-600 font-semibold text-sm">
             {patient.name.charAt(0).toUpperCase()}
           </div>
-          <span className="font-medium text-white">{patient.name}</span>
+          <span className="font-medium text-slate-900">{patient.name}</span>
         </div>
       ),
     },
@@ -120,7 +120,7 @@ export default function AdminPatients() {
               e.stopPropagation();
               handleEdit(patient);
             }}
-            className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg"
+            className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg"
           >
             <Edit className="w-4 h-4" />
           </button>
@@ -129,7 +129,7 @@ export default function AdminPatients() {
               e.stopPropagation();
               handleDelete(patient);
             }}
-            className="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 rounded-lg"
+            className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -142,15 +142,15 @@ export default function AdminPatients() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Patients</h1>
-          <p className="text-gray-400">Manage patient records</p>
+          <h1 className="text-2xl font-bold text-slate-900">Patients</h1>
+          <p className="text-slate-500">Manage patient records</p>
         </div>
         <button
           onClick={() => {
             setEditingPatient(null);
             setShowForm(true);
           }}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          className="flex items-center space-x-2 px-4 py-2 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition-colors"
         >
           <Plus className="w-5 h-5" />
           <span>Add Patient</span>
@@ -160,19 +160,19 @@ export default function AdminPatients() {
       {/* Search */}
       <div className="flex items-center space-x-2">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search by name, email, or phone..."
-            className="w-full pl-10 pr-4 py-2 bg-[#1a1a1a] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
           />
         </div>
         <button
           onClick={handleSearch}
-          className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+          className="px-4 py-2 bg-white text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
         >
           Search
         </button>
