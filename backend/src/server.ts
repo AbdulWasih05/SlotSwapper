@@ -59,10 +59,12 @@ app.get('/api', (req, res) => {
 import authRoutes from './routes/auth.js';
 import eventRoutes from './routes/events.js';
 import swapRoutes from './routes/swaps.js';
+import adminRoutes from './routes/admin/index.js';
 
 // Use routes
 app.use('/api/auth', authRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/admin', adminRoutes);  // Admin routes BEFORE generic /api routes
 app.use('/api', swapRoutes);
 
 // Socket.io connection handling
